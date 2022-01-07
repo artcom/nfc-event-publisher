@@ -1,0 +1,4 @@
+{
+  "bootstrapUrl": "http://bootstrap-server/device",
+  "tagScheme": "foo://"
+}
