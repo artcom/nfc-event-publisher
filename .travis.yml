@@ -1,0 +1,25 @@
+os: windows
+language: node_js
+node_js:
+- 16
+cache:
+  npm: false
+before_install:
+  - choco install python
+  - npm install -g pkg
+install:
+  - npm install --production
+script:
+  - pkg package.json
+  - ./scripts/release
+if: tag IS present
+deploy:
+  provider: releases
+  api_key:
+    secure: "vmfqq/YX2SC6SF7TZ+37xGLmr5z0TkxNpy123HpazrAVu0eEERGucrPnkFko0IisB0FX4XrWbFnKzFjIi4B1+Vrxe9ffrXOYFO6zQULRoLALEcpsVLC7CgVma5oArev/W5PiX3XZ/sw9pIr+cI1xOretVbXTLojy3W6JPC5tARJI9VmVmseEr1f/KvCk7lI0CeucRNUfHxDEyFtaj6GqZ9X30v7HYf5M02D7PdKvsWf6eTzr4eZcQB7Oaya1IlUxWPkphbnd0O7nhhLlv5KLuSgvWsk9YVRn6qdARpWuHl8+Y/b/6JyPr2FchcNfiZVRfbOPA2znNR48/z16m58+HqRVhs/Lipn4ZxQh6alE8xzfi+hoHpiiC9EW4bRNOD2IeyC49kpRvGZXTrhmt2NXzfoFYOR+LLdq4Lw8cP+RH4HLv6YG1EjAW+xfgVqkiQBmLuj9Byf2FUpwiXE7OSa7FEVLDGdRdqc1HwwHDF9zcBzNltD26MNxWe1x0OdUzVOKhg5IoVg7Srt2F02oXxfe3YiHE4V5lZn++pUpCoMCV5UkeZlDpeJWVB7Jh8Pdfticq5AzmJ5WZx7EJcqhWngCPTY3gSPZYdZ/HGo2eTu94ZeWZawj0Etmxy4N+Z26RjhDBQrMseTFazrefRjvxd/CgG0CBE5M9sxmZFBVTXzQ7c8="
+  file_glob: true
+  file: artifacts/*
+  skip_cleanup: true
+  on:
+    repo: artcom/nfc-event-publisher
+    tags: true

@@ -1,0 +1,9 @@
+set -eo pipefail
+
+ARTIFACTS_DIR="artifacts"
+
+echo "Packaging"
+mkdir "${ARTIFACTS_DIR}"
+cd dist
+echo {\"branch\": \"$TRAVIS_BRANCH\", \"commit\": \"$TRAVIS_COMMIT\", \"build\": $TRAVIS_BUILD_NUMBER} > build.json
+7z a -tzip "../${ARTIFACTS_DIR}/nfc-event-publisher-${TRAVIS_BRANCH}.zip" *
