@@ -1,7 +1,7 @@
 const { NFC } = require("nfc-pcsc")
 const bootstrap = require("@artcom/bootstrap-client")
 
-const config = require("../config.json")
+const config = require(readConfigFileArg())
 
 bootstrap(config.bootstrapUrl, "nfcEventPublisher").then(async ({ logger, mqttClient, data }) => {
   const eventTopic = `${data.deviceTopic}/nfc/onEvent`
@@ -13,7 +13,7 @@ bootstrap(config.bootstrapUrl, "nfcEventPublisher").then(async ({ logger, mqttCl
 
 async function handleReader(reader, logger, mqttClient, eventTopic) {
   logger.info("Reader connected", { reader: reader.name })
-  reader.aid = "F222222222"
+  reader.aid = "F222222222" 
   reader.autoProcessing = false
 
   reader.on("card", async card => {
@@ -68,5 +68,15 @@ function sliceIfPossible(buffer, start, item) {
     return buffer.slice(start, index)
   } else {
     return buffer
+  }
+}
+
+function readConfigFileArg() {
+  const args = process.argv.slice(2)[0]?.split("=")
+
+  if (args && args.length === 2 && args[0] === "configFile") {
+    return args[1]
+  } else {
+    return "../config.json"
   }
 }

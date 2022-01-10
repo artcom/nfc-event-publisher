@@ -4,7 +4,8 @@ Publishes tag payloads to the broker provided by a [bootstrap-server](https://gi
 
 ## Run locally
 
-* Copy `config.json.template` into `config.json` and change `bootstrapUrl` and `tagScheme` properties.
+* Copy `config.json.template` into `config.json` (default location) and change `bootstrapUrl` and `tagScheme` properties, OR
+* provide `config.json` in another location and point to it via cli args `npm start -- configFile=<pathToConfig.json>`
 
 ```bash
 npm install
